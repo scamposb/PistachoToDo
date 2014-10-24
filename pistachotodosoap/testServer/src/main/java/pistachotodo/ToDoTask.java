@@ -2,10 +2,10 @@ package pistachotodo;
 
 public class ToDoTask {
 
-	public String task;
-	public String context;
-	public String project;
-	public int priority;
+	private String task;
+	private String context;
+	private String project;
+	private int priority;
 
 	public String getTask() {
 		return task;
