@@ -19,4 +19,15 @@ public class ToDoList {
 		taskList.add(task);
 	}
 
+    public void removeTask(ToDoTask task){
+        for(ToDoTask itask : taskList){
+            if(itask.getTask().equals(task.getTask()) &&
+                    itask.getContext().equals(task.getContext()) &&
+                    itask.getProject().equals(task.getProject()) &&
+                    itask.getPriority()==task.getPriority()){
+                taskList.remove(itask);
+            }
+        }
+    }
+
 }
