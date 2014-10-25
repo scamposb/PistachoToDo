@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pistachotodo.AddToDoTask;
-import pistachotodo.ListToDoTasks;
-import pistachotodo.ToDoList;
-import pistachotodo.ToDoTask;
+import com.google.gson.Gson;
+
+import soap.ToDoTask;
+import soap.ToDoList;
+import soap.PistachoToDoService;
+import soap.PistachoToDoServiceService;
 
 /**
  * Servlet implementation class submitTask
@@ -41,8 +43,9 @@ public class submitTask extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		ToDoList taskList = ListToDoTasks.getTaskList();
+        PistachoToDoServiceService ptdss = new PistachoToDoServiceService();
+        PistachoToDoService ptds = ptdss.getPistachoToDoServicePort();
+		ToDoList taskList = ptds.getTaskList();
 		if(taskList == null){
 			taskList = new ToDoList();
 		}
@@ -72,9 +75,7 @@ public class submitTask extends HttpServlet {
 			newTask.setPriority(Integer.valueOf(request.getParameter("priority")));
 		}
 		
-		taskList.addTask(newTask);
-		
-		AddToDoTask.saveTaskList(taskList);
+		ptds.saveTaskList(taskList,newTask);
 	}
 
 }

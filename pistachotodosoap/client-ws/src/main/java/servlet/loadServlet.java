@@ -9,8 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pistachotodo.ListToDoTasks;
-import pistachotodo.ToDoList;
+import com.google.gson.Gson;
+
+import soap.ToDoTask;
+import soap.ToDoList;
+import soap.PistachoToDoService;
+import soap.PistachoToDoServiceService;
 
 /**
  * Servlet implementation class loadServlet
@@ -31,8 +35,9 @@ public class loadServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		ToDoList taskList = ListToDoTasks.getTaskList();
+        PistachoToDoServiceService ptdss = new PistachoToDoServiceService();
+        PistachoToDoService ptds = ptdss.getPistachoToDoServicePort();
+		ToDoList taskList = ptds.getTaskList();
 		if(taskList!=null){
 			request.setAttribute("taskList", taskList);
 			RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
