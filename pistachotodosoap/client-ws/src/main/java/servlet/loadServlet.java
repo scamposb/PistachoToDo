@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 
 import soap.ToDoTask;
 import soap.ToDoList;
@@ -39,9 +40,13 @@ public class loadServlet extends HttpServlet {
         PistachoToDoService ptds = ptdss.getPistachoToDoServicePort();
 		ToDoList taskList = ptds.getTaskList();
 		if(taskList!=null){
-			request.setAttribute("taskList", taskList);
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
-			rd.forward(request, response);
+
+            Gson gson = new Gson();
+            String jsonObject = gson.toJson(taskList);
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            out.print(jsonObject);
+            out.flush();
 		}
 	}
 

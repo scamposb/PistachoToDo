@@ -35,12 +35,12 @@ function findPriorityInTable() {
 function findInTable(searchValue, j){
 	var table = document.getElementById("toDoTable");
 	if (searchValue.toString() === "") {
-		for ( var i = 1; i < table.rows.length; i++) {
+		for ( var i = 0; i < table.rows.length; i++) {
 			var thisRow = document.getElementById("row" + i);
 			thisRow.style.display = "";
 		}
 	} else {
-		for ( var i = 1; i < table.rows.length; i++) {
+		for ( var i = 0; i < table.rows.length; i++) {
 			var thisRow = document.getElementById("row" + i);
 			var firstCell = thisRow.cells[j];
 			var content = firstCell.innerHTML.toString();
