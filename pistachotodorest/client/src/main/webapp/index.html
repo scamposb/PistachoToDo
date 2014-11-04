@@ -48,18 +48,21 @@
 				<div class="line-separator"></div>
 				<table class="table" id="toDoTable" ng-controller="tableRowController as tableRow">
                     <tr>
+                        <td><h3>Id</h3></td>
                         <td><h3>Task</h3></td>
                         <td><h3>Context</h3></td>
                         <td><h3>Project</h3></td>
                         <td><h3>Priority</h3></td>
+                        <td><h3><span class="glyphicon glyphicon-remove"></span></h3></td>
                     </tr>
-					<tbody ng-repeat="item in tableRow.items track by $index">
-                        <tr class="myTableContent" ng-attr-id="{{ 'row' + item.id }}">
+					<tbody>
+                        <tr class="myTableContent" ng-repeat="item in tableRow.items track by $index" ng-attr-id="{{ 'row' + $index }}">
+                            <td>{{item.id}}</td>
                             <td>{{item.task}}</td>
                             <td>{{item.context}}</td>
                             <td>{{item.project}}</td>
                             <td>{{item.priority}}</td>
-                            <td ng-controller="delRowController"><button class="btn btn-danger" ng-click="deleteRow(item.id)">X</button></td>
+                            <td style="width: 10px;" ng-controller="delRowController"><button class="btn btn-danger" ng-click="deleteRow(item.id, $index)"><span class="glyphicon glyphicon-remove"></span></button></td>
                         </tr>
 					</tbody>
 				</table>
@@ -105,7 +108,7 @@
 	</div>
 
 	<!-- js scripts -->
-	<!-- load script -->suc
+	<!-- load script -->
 	<script src="./js/angular.min.js"></script>
     <script src="./js/load.js"></script>
 	<!-- search script -->
