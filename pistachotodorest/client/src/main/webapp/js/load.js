@@ -69,7 +69,7 @@ var tableRow;
                 console.log("Deleted task");
             });
 
-            document.getElementById("row"+index).style.display = "none";
+            document.getElementById("toDoTable").deleteRow(document.getElementById("row"+index).rowIndex);
         }
     }]);
 })();
