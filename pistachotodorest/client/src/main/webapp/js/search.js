@@ -7,19 +7,19 @@ function openSearch() {
 function findTaskInTable() {
 	var searchValue = document.getElementById("taskSearchInput").value;
 
-	findInTable(searchValue,0);
+	findInTable(searchValue,1);
 }
 
 function findContextInTable() {
 	var searchValue = document.getElementById("contextSearchInput").value;
 
-	findInTable(searchValue,1);
+	findInTable(searchValue,2);
 }
 
 function findProjectInTable() {
 	var searchValue = document.getElementById("projectSearchInput").value;
 
-	findInTable(searchValue,2);
+	findInTable(searchValue,3);
 }
 
 function findPriorityInTable() {
@@ -28,19 +28,19 @@ function findPriorityInTable() {
 	if(isNaN(searchValue.toString())){
 		//error
 	}else{
-		findInTable(searchValue,3);
+		findInTable(searchValue,4);
 	}
 }
 
 function findInTable(searchValue, j){
 	var table = document.getElementById("toDoTable");
 	if (searchValue.toString() === "") {
-		for ( var i = 0; i < table.rows.length; i++) {
+		for ( var i = 0; i < table.tBodies[1].rows.length; i++) {
 			var thisRow = document.getElementById("row" + i);
 			thisRow.style.display = "";
 		}
 	} else {
-		for ( var i = 0; i < table.rows.length; i++) {
+		for ( var i = 0; i < table.tBodies[1].rows.length; i++) {
 			var thisRow = document.getElementById("row" + i);
 			var firstCell = thisRow.cells[j];
 			var content = firstCell.innerHTML.toString();

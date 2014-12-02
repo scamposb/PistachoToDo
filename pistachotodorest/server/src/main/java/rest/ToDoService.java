@@ -47,6 +47,11 @@ public class ToDoService {
         return Response.created(task.getHref()).entity(task).build();
     }
 
+    /**
+     * GET method that returns a particular task from server
+     * @param id id of the task to be retrieved
+     * @return JSON with the object retrieved
+     */
     @GET
     @Path("/task/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -59,6 +64,11 @@ public class ToDoService {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
+    /**
+     * DELETE method that deletes a particular task from server
+     * @param id id of the task to be removed
+     * @return void JSON
+     */
     @DELETE
     @Path("/task/{id}")
     @Produces(MediaType.APPLICATION_JSON)

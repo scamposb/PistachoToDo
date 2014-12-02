@@ -1,15 +1,14 @@
 var app = angular.module('load',[]);
 
-var nextId = 1;
+var tableRow;
 
 (function(){
     app.controller('tableRowController', [ '$http', function($http){
-        var tableRow = this;
+        tableRow = this;
         tableRow.items = [ ];
 
         $http({ method: 'GET', url: 'http://localhost:8080/PistachoToDo/' }).success(function(data){
             tableRow.items = data.toDoList;
-            nextId = data.toDoList.length +1;
         });
     }]);
 })();
@@ -47,38 +46,8 @@ var nextId = 1;
             }
 
             $http.post('http://localhost:8080/PistachoToDo/',JSON.stringify(task)).success(function(data){
-                console.log("Created new task");
+                tableRow.items.push(data);
             });
-
-            // Retrieve table from document
-            var table = document.getElementById("toDoTable");
-
-            // Add new row to table
-            var row = table.insertRow(table.rows.length);
-//            row.id = "row"+(table.rows.length-2);
-            row.id = "row"+nextId;
-            row.className = "myTableContent";
-
-            // Add cells to new row
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            var cell3 = row.insertCell(2);
-            var cell4 = row.insertCell(3);
-	    var cell5 = row.insertCell(4);
-
-            // Place text from inputs in row cells
-            cell1.innerHTML = field1.toString();
-            cell2.innerHTML = field2.toString();
-            cell3.innerHTML = field3.toString();
-            cell4.innerHTML = field4.toString();
-
-	    //Place delete button
-	    cell5.innerHTML = '<td ng-controller="delRowController"><button class="btn btn-danger" ng-click="deleteRow('+nextId+')">X</button></td>'
-
-	    //Increase nextid
-            nextId++;
-
-            // table.rows.hide().fadeIn("slow");
 
             // Clear text inputs
             $(document.getElementById("newRowForm"))[0].reset();
@@ -94,13 +63,13 @@ var nextId = 1;
 
 (function(){
     app.controller("delRowController", [ '$scope', '$http', function($scope, $http){
-        $scope.deleteRow = function(id){
+        $scope.deleteRow = function(id, index){
 
             $http.delete('http://localhost:8080/PistachoToDo/task/'+id).success(function(data){
                 console.log("Deleted task");
             });
 
-            document.getElementById("row"+id).style.display = "none";
+            document.getElementById("toDoTable").deleteRow(document.getElementById("row"+index).rowIndex);
         }
     }]);
 })();
