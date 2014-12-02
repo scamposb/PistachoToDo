@@ -1,0 +1,10 @@
+/bin/
+/build/
+/gradle/
+/src-gen/
+/.settings/
+/.gradle/
+/.idea/
+/.classpath
+/.project
+/client-ws.iml
