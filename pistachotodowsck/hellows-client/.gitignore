@@ -2,6 +2,7 @@
 /bin/
 /.gradle/
 /.settings/
+/.idea/
 /.classpath
 /.project
 *.iml
