@@ -21,6 +21,7 @@ public class PistachoServerEndpoint {
 
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 
+    /* OP CODES */
     private static final int START = 0;
     private static final int QUIT = 1;
     private static final int GET = 2;
@@ -104,16 +105,11 @@ public class PistachoServerEndpoint {
 
     private String removeTask(int index){
         try{
-            ToDoList list = TaskListManager.getTaskList();
-            for (int i = 0; i < list.getToDoList().size(); i++) {
-                if (list.getToDoList().get(i).getId() == index) {
-                    list.getToDoList().remove(i);
-                    System.out.println("Deleted task.");
-                }
-            }
-            TaskListManager.saveTaskList(list);
+            TaskListManager.removeTask(index);
+            logger.info("User deleted a task.");
             return new PistachoResponse(PistachoResponse.CORRECT).JSON();
         }catch(Exception e){
+            logger.info("Failed to remove a task.");
             return new PistachoResponse(PistachoResponse.BAD_INDEX).JSON();
         }
     }

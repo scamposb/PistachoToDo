@@ -1,4 +1,4 @@
-package events.hellows;
+package events.pistachows;
 
 import java.io.IOException;
 import java.net.URI;
@@ -18,7 +18,7 @@ public class Client {
 	
 		ClientManager client = ClientManager.createClient();
 		try {
-			client.connectToServer(WordgameClientEndpoint.class, new URI(
+			client.connectToServer(PistachoClientEndpoint.class, new URI(
 					"ws://localhost:8025/websockets/PistachoToDo"));
 			latch.await();
 	

@@ -1,4 +1,4 @@
-package events.hellows;
+package events.pistachows;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,11 +11,9 @@ import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import javax.websocket.CloseReason.CloseCodes;
-import javax.websocket.server.ServerEndpoint;
 
 @ClientEndpoint
-public class WordgameClientEndpoint {
+public class PistachoClientEndpoint {
 
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 

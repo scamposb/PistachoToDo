@@ -14,6 +14,6 @@ task client(type: JavaExec) {
 	standardInput 	= System.in  
     group 			= 'Hello Websockets Service'
     description 	= 'Start a Websocket client'
-    main 			= 'events.hellows.Client'
+    main 			= 'events.pistachows.Client'
 	classpath 		= sourceSets.main.runtimeClasspath
 }

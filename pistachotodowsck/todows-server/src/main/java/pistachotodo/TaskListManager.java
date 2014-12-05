@@ -60,14 +60,14 @@ public class TaskListManager {
         newTask.setContext(context);
         newTask.setProject(project);
         newTask.setPriority(priority);
-        ToDoList list = TaskListManager.getTaskList();
+        ToDoList list = getTaskList();
         list.addTask(newTask);
 
         saveTaskList(list);
     }
 
     public static void addTask (ToDoTask task){
-        ToDoList list = TaskListManager.getTaskList();
+        ToDoList list = getTaskList();
         list.addTask(task);
 
         saveTaskList(list);
@@ -79,17 +79,22 @@ public class TaskListManager {
         newTask.setContext(context);
         newTask.setProject(project);
         newTask.setPriority(priority);
-        ToDoList list = TaskListManager.getTaskList();
+        ToDoList list = getTaskList();
         list.removeTask(newTask);
 
         saveTaskList(list);
     }
 
-    public static ToDoTask parseTask(String rawData){
-        Gson gson = new Gson();
+    public static void removeTask (int index){
+        ToDoList list = getTaskList();
+        for (int i = 0; i < list.getToDoList().size(); i++) {
+            if (list.getToDoList().get(i).getId() == index) {
+                list.getToDoList().remove(i);
+                System.out.println("Deleted task.");
+            }
+        }
 
-        ToDoTask task = gson.fromJson(rawData, ToDoTask.class);
-        return task;
+        saveTaskList(list);
     }
 
     public static boolean isValid(ToDoTask task){
