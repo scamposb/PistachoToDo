@@ -11,11 +11,11 @@ There are 5 types of requests possible (bold implies mandatory):
 
 | Operation | Syntax |
 | ------------- | ------------- |
-| Start | *{code: 0* [, task: null] [, index: null]*}* |
-| Stop | *{code: 1* [, task: null] [, index: null]*}* |
-| GET | *{code: 2* [, task: null] [, index: null]*}* |
-| POST {task} | *{code: 3, task: {task: "taskName"* [, context: "foo"] [, project: "bar"]*, priority:0}* [, index: null]*}* |
-| DELETE {id} | *{code: 4* [, task: null]*, index: 3}* |
+| Start | **{code: 0** [, task: null] [, index: null]**}** |
+| Stop | **{code: 1** [, task: null] [, index: null]**}** |
+| GET | **{code: 2** [, task: null] [, index: null]**}** |
+| POST {task} | **{code: 3, task: {task: "taskName"** [, context: "foo"] [, project: "bar"]**, priority:0}** [, index: null]**}** |
+| DELETE {id} | **{code: 4** [, task: null]**, index: 3}** |
 
 Also, there are X types of response possible:
 
