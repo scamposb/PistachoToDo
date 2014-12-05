@@ -1,5 +1,6 @@
 package events.pistachows;
 
+import com.google.gson.JsonSyntaxException;
 import pistachotodo.TaskListManager;
 import pistachotodo.ToDoList;
 import pistachotodo.ToDoTask;
@@ -33,50 +34,45 @@ public class PistachoServerEndpoint {
 
 	@OnMessage
 	public String onMessage(String message, Session session) {
-        try {
-            message = message.trim();
-            int code = Integer.parseInt(message.substring(0, 1));
-            switch (code) {
+        try{
+            logger.info(message);
+            PistachoMessage msg = PistachoMessage.parseFrom(message);
+            logger.info("\n" +
+                    "==============================\n" +
+                    "==============================\n" +
+                    "\tcode: "+msg.getCode()+"\n" +
+                    "\tindex: "+msg.getIndex()+"\n" +
+                    "\ttask: "+msg.getTask()+"\n" +
+                    "==============================\n" +
+                    "==============================\n");
+            switch(msg.getCode()){
                 case START:
-                    return "Hello, not-so-Anon";
+                    logger.info("Saying hello to user.");
+                    return new PistachoResponse(PistachoResponse.HELLO).JSON();
                 case QUIT:
-                    try {
-                        session.close(new CloseReason(CloseCodes.NORMAL_CLOSURE,
-                                "Connection ended"));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    close(session);
                     return null;
                 case GET:
                     //Returns a JSON with ToDoTasks
-                    logger.info("User asked for TaskList");
+                    logger.info("User asked for TaskList.");
                     return TaskListManager.getJsonTaskList();
                 case POST:
                     //Saves a ToDoTask
-                    String DATA = message.substring(2);
-                    ToDoTask newTask = TaskListManager.parseTask(DATA);
-                    if(newTask != null) {
-                        TaskListManager.addTask(newTask);
-                        logger.info("User added a task");
-                        return "Task added";
-                    }else{
-                        logger.info("Failed to add a task");
-                        return "Syntax of task: "+ DATA + ", is invalid.";
-                    }
+                    return addTask(msg.getTask());
                 case DELETE:
-                    //Saves a ToDoTask
-                    return "WIP, try later";
+                    //Deletes a ToDoTask
+                    return removeTask(msg.getIndex());
                 default:
                     logger.info("Unrecognized message: " + message + " \n" +
                             "From: " + session.getId());
-                    return "Anon please";
+                    return new PistachoResponse(PistachoResponse.BAD_CODE).JSON();
             }
-        }catch(NumberFormatException e){
-            logger.info("Anon sent bad code, such fag");
-            return "Bad code >:C";
-        }catch(StringIndexOutOfBoundsException e){
-            logger.info("Parameters for invoked method wrongly specified");
-            return "Specify parameters, fag";
+        }catch(NullPointerException e){
+            logger.info("Bad code on request");
+            return new PistachoResponse(PistachoResponse.BAD_CODE).JSON();
+        }catch(Exception e){
+            logger.info("Bad syntax on request");
+            return new PistachoResponse(PistachoResponse.BAD_SYNTAX).JSON();
         }
 	}
 
@@ -85,4 +81,40 @@ public class PistachoServerEndpoint {
 		logger.info(String.format("Session %s closed because of %s",
 				session.getId(), closeReason));
 	}
+
+    private void close(Session session){
+        try {
+            session.close(new CloseReason(CloseCodes.NORMAL_CLOSURE,
+                    "Connection ended."));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String addTask(ToDoTask newTask){
+        if(newTask != null && TaskListManager.isValid(newTask)) {
+            TaskListManager.addTask(newTask);
+            logger.info("User added a task.");
+            return new PistachoResponse(PistachoResponse.CORRECT).JSON();
+        }else{
+            logger.info("Failed to add a task.");
+            return new PistachoResponse(PistachoResponse.BAD_TASK).JSON();
+        }
+    }
+
+    private String removeTask(int index){
+        try{
+            ToDoList list = TaskListManager.getTaskList();
+            for (int i = 0; i < list.getToDoList().size(); i++) {
+                if (list.getToDoList().get(i).getId() == index) {
+                    list.getToDoList().remove(i);
+                    System.out.println("Deleted task.");
+                }
+            }
+            TaskListManager.saveTaskList(list);
+            return new PistachoResponse(PistachoResponse.CORRECT).JSON();
+        }catch(Exception e){
+            return new PistachoResponse(PistachoResponse.BAD_INDEX).JSON();
+        }
+    }
 }

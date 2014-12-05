@@ -92,4 +92,9 @@ public class TaskListManager {
         return task;
     }
 
+    public static boolean isValid(ToDoTask task){
+        return (task.getTask() != null &&
+                !task.getTask().isEmpty());
+    }
+
 }

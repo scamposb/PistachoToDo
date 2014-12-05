@@ -23,7 +23,7 @@ public class WordgameClientEndpoint {
 	public void onOpen(Session session) {
 		logger.info("Connected ... " + session.getId());
 		try {
-			session.getBasicRemote().sendText("0");
+			session.getBasicRemote().sendText("{code: 0}");
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
