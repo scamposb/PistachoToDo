@@ -15,10 +15,14 @@ public class WebSocketServer {
     } 
  
     public static void runServer() {
-        Server server = new Server("localhost", 8025, "/websockets", new HashMap<String,Object>(), PistachoServerEndpoint.class);
- 
+        Server server2 = new Server("localhost", 8025, "/websockets", new HashMap<String,Object>(), ListServerEndpoint.class);
+        Server server = new Server("localhost", 8026, "/websockets", new HashMap<String,Object>(), PostServerEndpoint.class);
+        Server server3 = new Server("localhost", 8027, "/websockets", new HashMap<String,Object>(), DeleteServerEndpoint.class);
+
         try {
             server.start();
+            server2.start();
+            server3.start();
 			LOGGER.info("Press 's' to shutdown now the server...");
 			while(true){
 				int c = System.in.read();
@@ -29,6 +33,8 @@ public class WebSocketServer {
 			LOGGER.log(Level.SEVERE, e.toString(), e);
         } finally {
             server.stop();
+            server2.stop();
+            server3.stop();
 			LOGGER.info("Server stopped");
         }
     }

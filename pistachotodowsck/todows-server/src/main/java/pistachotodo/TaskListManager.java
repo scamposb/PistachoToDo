@@ -22,7 +22,7 @@ public class TaskListManager {
         } catch (FileNotFoundException e) {
             taskList = null;
         }
-        return gson.toJson(taskList);
+        return gson.toJson(taskList.getToDoList());
     }
 
 	public static ToDoList getTaskList() {
@@ -54,23 +54,13 @@ public class TaskListManager {
         }
     }
 
-    public static void addTask (String task, String context, String project, int priority){
-        ToDoTask newTask = new ToDoTask();
-        newTask.setTask(task);
-        newTask.setContext(context);
-        newTask.setProject(project);
-        newTask.setPriority(priority);
+    public static String addTask (ToDoTask task){
         ToDoList list = getTaskList();
-        list.addTask(newTask);
+        ToDoTask newTask = list.addTask(task);
 
         saveTaskList(list);
-    }
 
-    public static void addTask (ToDoTask task){
-        ToDoList list = getTaskList();
-        list.addTask(task);
-
-        saveTaskList(list);
+        return new Gson().toJson(newTask);
     }
 
     public static void removeTask (String task, String context, String project, int priority){
@@ -95,6 +85,10 @@ public class TaskListManager {
         }
 
         saveTaskList(list);
+    }
+
+    public static ToDoTask parseTask(String message){
+        return new Gson().fromJson(message, ToDoTask.class);
     }
 
     public static boolean isValid(ToDoTask task){

@@ -38,9 +38,10 @@ public class ToDoList {
 		this.taskList = taskList;
 	}
 	
-	public void addTask(ToDoTask task){
+	public ToDoTask addTask(ToDoTask task){
         task.setId(nextId());
 		taskList.add(task);
+        return task;
 	}
 
     public void removeTask(ToDoTask task){

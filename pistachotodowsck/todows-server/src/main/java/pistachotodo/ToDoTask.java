@@ -9,7 +9,6 @@ public class ToDoTask {
 	private String context;
 	private String project;
 	private int priority;
-    private URI href;
 
     public int getId() {
         return _id;
@@ -50,13 +49,5 @@ public class ToDoTask {
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
-
-    public void setHref(URI href) {
-        this.href = href;
-    }
-
-    public URI getHref() {
-        return href;
-    }
 
 }
