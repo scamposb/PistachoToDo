@@ -45,8 +45,6 @@ public class TaskListManager {
         try {
             FileWriter output = new FileWriter(DEFAULT_FILE_NAME);
             output.write(gson.toJson(taskList));
-//		    File f = new File(DEFAULT_FILE_NAME);
-//		    System.out.println(f.getAbsolutePath());
             output.close();
             System.out.println("Added new task.");
         }catch(IOException e){

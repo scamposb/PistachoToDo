@@ -27,3 +27,5 @@ Also, there are X types of response possible:
 | BAD INDEX | {code: 3, message: "Task index wrong"} |
 | CORRECT | {code: 4, message: "Operation successful"} |
 | HELLO | {code: 5, message: "Hello world!"} |
+| LIST | {code: 6, data: Object(ToDoList)} |
+| TASK | {code: 7, data: Object(ToDoTask)} |
